@@ -1,15 +1,18 @@
 FROM ubuntu:18.04
-MAINTAINER uli.hitzel@gmail.com
+#FROM ubuntu:20.04
+LABEL mantainer=azizboussehal@gmail.com
 EXPOSE 8080 5901
 ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Asia/Singapore
+#ENV TZ=Asia/Singapore
+ENV TZ=europe/london
 
 RUN apt-get update
 RUN apt-get install -y xfce4 xfce4-terminal
-RUN apt-get install -y novnc
+RUN apt-get install -y novnc 
+#python3-websockify python3-numpy
 RUN apt-get install -y tightvncserver websockify
 RUN apt-get install -y wget net-tools wget curl chromium-browser firefox openssh-client git
-ENV USER root
+ENV USER=root
 
 COPY start.sh /start.sh
 RUN chmod a+x /start.sh

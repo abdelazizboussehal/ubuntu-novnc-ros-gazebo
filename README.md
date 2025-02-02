@@ -7,6 +7,9 @@ An Ubuntu 18.04 Desktop in a Docker container, running
 * Firefox
 * Terminal
 
+
+## build image
+`docker build -t <image-name> .`
 ## Run the Container
 
 `docker run -d -p 8080:8080 u1ih/ubuntu-novnc`
@@ -33,4 +36,6 @@ Yes.
 
 [https://hub.docker.com/r/u1ih/ubuntu-novnc](https://hub.docker.com/r/u1ih/ubuntu-novnc)
 
+## gazebo-ros2 projet
+[gitlab](https://gitlab.informatik.uni-bremen.de/tom_sch/mulecar_simulation/-/tree/master?ref_type=heads)
 

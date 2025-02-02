@@ -1,0 +1,21 @@
+FROM no-vnc
+USER root
+
+
+RUN  apt-get update  
+RUN  apt install -y gnupg2 lsb-release
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
+RUN  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+
+RUN apt update
+RUN apt install -y ros-dashing-desktop
+RUN apt install -y ros-dashing-ros-base
+RUN apt install -y python3-pip
+RUN pip3 install -U argcomplete
+RUN echo 'source /opt/ros/dashing/setup.bash' >> /root/.bashrc
+
+RUN curl -sSL http://get.gazebosim.org | sh
+RUN apt install -y ros-dashing-gazebo11-*
+RUN apt install -y ros-dashing-ros-core
+RUN apt install -y ros-dashing-urdf
+RUN apt install -y ros-dashing-xacro
