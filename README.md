@@ -13,10 +13,16 @@ An Ubuntu 18.04 Desktop in a Docker container, running
 ## Run the Container
 
 `docker run -d -p 8080:8080 u1ih/ubuntu-novnc`
+## Run the Container with volume
+`docker run \`
+ ` -v /home/audaxis/Desktop/workspace/doctorat/ROS:/home/user/workdir \ `
+ ` -p 8082:8080 \ `
+ ` no-vnc-gz`
+
 
 ## Access via Web Browser
 
-`http://localhost:8080?password=insecure`
+[http://localhost:8080?password=insecure](http://localhost:8080?password=insecure)
 
 ![](desktop1.png)
 

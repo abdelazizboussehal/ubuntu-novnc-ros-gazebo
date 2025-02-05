@@ -8,11 +8,16 @@ ENV TZ=europe/london
 
 RUN apt-get update
 RUN apt-get install -y xfce4 xfce4-terminal
+#RUN apt-get update \
+#  && apt-get install -y ubuntu-desktop fcitx-config-gtk gnome-tweak-tool gnome-usage
 RUN apt-get install -y novnc 
 #python3-websockify python3-numpy
 RUN apt-get install -y tightvncserver websockify
 RUN apt-get install -y wget net-tools wget curl chromium-browser firefox openssh-client git
 ENV USER=root
+ENV VNC_RESOLUTION=1366x768
+ENV DISPLAY_WIDTH=1366
+ENV DISPLAY_HEIGHT=768
 
 COPY start.sh /start.sh
 RUN chmod a+x /start.sh
