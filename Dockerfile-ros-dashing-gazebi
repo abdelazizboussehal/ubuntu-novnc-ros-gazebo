@@ -1,36 +1,49 @@
-FROM no-vnc
+#FROM no-vnc
+FROM dorowu/ubuntu-desktop-lxde-vnc:focal
 USER root
 
+RUN apt update --allow-insecure-repositories
+RUN apt-get install -y xfce4 xfce4-terminal
+RUN apt-get install -y wget net-tools wget curl firefox openssh-client git
+RUN apt-get -y install gedit vim
 
-RUN  apt-get update  
+#RUN  apt-get update  
 RUN  apt install -y gnupg2 lsb-release
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
 RUN  echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
-RUN apt update
-RUN apt install -y ros-dashing-desktop
-RUN apt install -y ros-dashing-ros-base
-RUN apt-get update &&  apt-get -y upgrade
-RUN apt-get install python3.8 python3.8-venv python3.8-dev -y
+RUN apt update --allow-insecure-repositories
+RUN apt install -y ros-foxy-desktop
+RUN apt install -y ros-foxy-ros-base
+#RUN apt-get update &&  apt-get -y upgrade
+#RUN apt-get install python3.8 python3.8-venv python3.8-dev -y
 RUN apt install -y python3-pip
 RUN pip3 install -U argcomplete
-RUN echo 'source /opt/ros/dashing/setup.bash' >> /root/.bashrc
-RUN echo 'source /opt/ros/dashing/setup.bash' >> /home/user/.bashrc
+RUN echo 'source /opt/ros/foxy/setup.bash' >> /root/.bashrc
+#RUN echo 'source /opt/ros/foxy/setup.bash' >> /home/user/.bashrc
 
 RUN curl -sSL http://get.gazebosim.org | sh
-RUN apt install -y ros-dashing-gazebo11-*
-RUN apt install -y ros-dashing-ros-core
-RUN apt install -y ros-dashing-urdf
-RUN apt install -y ros-dashing-xacro
+RUN apt-get install -y ros-foxy-gazebo-ros-pkgs
+RUN apt-get install -y ros-foxy-gazebo-msgs
+RUN apt-get install -y ros-foxy-gazebo-plugins
+RUN apt-get install -y ros-foxy-gazebo-ros2-control
+RUN apt-get install -y ros-foxy-teleop-twist-keyboard
+RUN apt install -y ros-foxy-ros-core
+RUN apt install -y ros-foxy-urdf
+RUN apt install -y ros-foxy-xacro
 RUN mkdir -p /home/user/workdir
 RUN chmod 777 /home/user/workdir
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
+#RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 1
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
 RUN update-alternatives --set python3 /usr/bin/python3.8
 RUN pip3 install pycamunda
-RUN update-alternatives --set python3 /usr/bin/python3.6
+#RUN update-alternatives --set python3 /usr/bin/python3.6
 RUN apt-get -y install sudo
 RUN echo 'root:root' | chpasswd
+RUN useradd -ms /bin/bash user
+COPY config /home/user
+RUN chown -R user:user /home/user
 RUN echo 'user:root' | chpasswd
 RUN usermod -aG sudo user
-USER user
+RUN echo 'source /opt/ros/foxy/setup.bash' >> /home/user/.bashrc
+USER root

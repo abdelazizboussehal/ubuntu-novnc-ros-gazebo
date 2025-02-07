@@ -1,5 +1,5 @@
-FROM ubuntu:18.04
-#FROM ubuntu:20.04
+#FROM ubuntu:18.04
+FROM ubuntu:20.04
 LABEL mantainer=azizboussehal@gmail.com
 EXPOSE 8080 5901
 ARG DEBIAN_FRONTEND=noninteractive
@@ -34,12 +34,17 @@ RUN chown -R user:user /home/user
 #RUN apt-get -y install gvfs-bin
 #RUN dpkg -i atom-amd64.deb
 RUN apt-get -y install gedit vim
+RUN apt-get -y install  python3.6
+RUN whereis python3.6
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
+RUN update-alternatives --set python3 /usr/bin/python3.8
+RUN python3 --version
 USER user
 
 WORKDIR /.novnc
-RUN wget -qO- https://github.com/novnc/noVNC/archive/v1.0.0.tar.gz | tar xz --strip 1 -C $PWD
+RUN wget -qO- https://github.com/novnc/noVNC/archive/v1.5.0.tar.gz | tar xz --strip 1 -C $PWD
 RUN mkdir /.novnc/utils/websockify
-RUN wget -qO- https://github.com/novnc/websockify/archive/v0.6.1.tar.gz | tar xz --strip 1 -C /.novnc/utils/websockify
+RUN wget -qO- https://github.com/novnc/websockify/archive/v0.12.0.tar.gz | tar xz --strip 1 -C /.novnc/utils/websockify
 RUN ln -s vnc.html index.html
 
 WORKDIR /home/user
